@@ -1,14 +1,14 @@
 # PostCSS Custom Selectors [![Build Status](https://travis-ci.org/postcss/postcss-custom-selector.svg)](https://travis-ci.org/postcss/postcss-custom-selector)
 
-> [PostCSS](https://github.com/postcss/postcss) 实现 [W3C CSS Extensions(Custom Selectors)](http://dev.w3.org/csswg/css-extensions/#custom-selectors) 的插件。
+> [PostCSS](https://github.com/postcss/postcss) plugin to transform [W3C CSS Extensions(Custom Selectors)](http://dev.w3.org/csswg/css-extensions/#custom-selectors) to more compatible CSS.
 
+## Install
 
+```console
+$ npm install postcss-custom-selectors
+```
 
-## 安装
-
-    $ npm install postcss-custom-selectors
-
-## 快速开始
+## Usage
 
 ```js
 // dependencies
@@ -24,11 +24,11 @@ var output = postcss()
   .use(selector())
   .process(css)
   .css
-  
+
 console.log('\n\n ====>Output CSS:\n',output)  
 ```
 
-或者：
+Or just：
 
 ```js
 var output = postcss(selector())
@@ -41,12 +41,12 @@ input.css：
 ```css
 @custom-selector --heading h1, h2, h3, h4, h5, h6;
 
-article --heading + p{ 
+article --heading + p{
   margin-top: 0;
 }
 ```
 
-你将得到：
+output
 
 ```css
 article h1 + p, article h2 + p, article h3 + p, article h4 + p, article h5 + p, article h6 + p{
@@ -54,7 +54,7 @@ article h1 + p, article h2 + p, article h3 + p, article h4 + p, article h5 + p, 
 }
 ```
 
-## CSS 语法
+## CSS spec
 
 A custom selector is defined with the `@custom-selector` rule:
 
@@ -73,16 +73,16 @@ For example, if an author wanted to easily refer to all heading elements in thei
 /* etc */
 ```
 
-## 如何使用
+## How to use it
 
-### 伪元素/伪类
+### Pseudo elements/classes
 
-你可以使用 
+You can use
 
-* `:` 自定义一个伪类。
-* `::`自定义一个伪元素。
+* `:` to customise a class.
+* `::` to customise a pseudo element.
 
-例如，模拟一个 :any-link 选择器：
+For example to simulate `:any-link` you can do：
 
 input.css:
 
@@ -101,19 +101,20 @@ a:link, a:visited {
   color: blue;
 }
 ```
-### 多个选择器
+### Multiples selectors
 
-`@custom-selector` 类似 CSS [`:matches()`](http://dev.w3.org/csswg/selectors-4/#matches) 选择器，但是目前**不支持**在同一个选择器中调用多个自定义选择器，例如：
+`@custom-selector` similar to CSS [`:matches()`](http://dev.w3.org/csswg/selectors-4/#matches) selector, but do not support multiple values:
 
 ```css
 @custom-selector --heading h1, h2, h3, h4, h5, h6;
 @custom-selector :--any-link :link, :visited;
 
-.demo --heading, a:--any-link { 
+.demo --heading, a:--any-link {
   font-size: 32px;
 }
 ```
-将会输出错误的 CSS 代码。
+
+This will throw an error.
 
 ### Grunt
 
@@ -164,13 +165,11 @@ gulp.task('default', function () {
 gulp.watch('src/*.css', ['default']);
 ```
 
+### Options
 
+### `extensions` (default: `{}`)
 
-### 选项
-
-**`extensions`** (默认: `{}`)
-
-该选项允许你自定义一个对象来设置 `<extension-name>`（选择器别名）和 `<selector>`，这些定义将覆盖 CSS 中相同别名的 `@custom-selector`。
+This option allows you to customize an object to set `<extension-name>` (selector alias) and `<selector>`, these definitions will override the CSS in the same alias `@custom-selector`.
 
 ```js
 var options = {
@@ -187,7 +186,7 @@ var output = postcss(selector(options))
 input.css
 
 ```css
-@custom-selector :--any .foo, .bar; /* 不会生效 */
+@custom-selector :--any .foo, .bar; /* overriden by JS definition */
 :--any h1 {
   margin-top: 16px;
 }
@@ -202,13 +201,11 @@ section h1, article h1, aside h1, nav h1 {
 ```
 
 
-## 贡献
+## Contribute
 
-* 安装相关依赖模块
-* 尊重编码风格（安装 [EditorConfig](http://editorconfig.org/)）
-* 运行测试
+Work on a branch, install dev-dependencies, respect coding style ([EditorConfig](http://editorconfig.org/)) & run tests before submitting a bug fix or a feature.
 
-```
+```console
 $ git clone https://github.com/postcss/postcss-custom-selectors.git
 $ git checkout -b patch
 $ npm install
