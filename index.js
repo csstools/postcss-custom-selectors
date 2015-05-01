@@ -24,7 +24,7 @@ function customSelector(options) {
 
     // 读取自定义选择器
     styles.eachAtRule(function(rule) {
-      if (rule.name !== "custom-selector") {
+      if (rule.name !== "custom-selector" && rule.name !== "define-selector") {
         return
       }
 
