@@ -3,7 +3,7 @@
  * :--foo
  * 注意：CSS 选择器区分大小写
  */
-var re_CUSTOM_SELECTOR = /([^,]*?)(:-{2,}[\w-]+)([^,]*)/g
+var re_CUSTOM_SELECTOR = /([^,]*?)(:-{2,}[\w-]+)(.*)/g
 
 /**
  * 暴露插件
@@ -58,8 +58,8 @@ function customSelector(options) {
       for (var prop in customSelectors) {
         if (rule.selector.indexOf(prop) >= 0) {
           customSelector = customSelectors[prop]
+          
           // $2 = <extension-name> （自定义的选择器名称）
-
           rule.selector = rule.selector.replace(re_CUSTOM_SELECTOR, function($0, $1, $2, $3) {
             if ($2 === prop) {
               return customSelector.split(",").map(function(selector) {
