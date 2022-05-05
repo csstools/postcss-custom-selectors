@@ -13,6 +13,7 @@ module.exports = {
 		':--multiline': '.foo,\n	.bar > .baz',
 		':--button': 'button, .button',
 		':--enter': ':hover, :focus',
-		':--any-foobar': '.foo, .bar'
+		':--any-foobar': '.foo, .bar',
+		':--foobaz': '.foo.baz'
 	}
 };

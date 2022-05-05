@@ -92,3 +92,7 @@ main :--foo + p {
 @custom-selector :--foobar .foo;
 
 :--foobar {}
+
+@custom-selector :--foobaz .foo.baz;
+
+a, :--foobaz {}
